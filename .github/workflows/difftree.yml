@@ -1,0 +1,20 @@
+name: PR Diff Tree
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  difftree:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # REQUIRED — difftree --pr needs full base history
+
+      # Pinned to the branch under test. Bump to @v0 / @v1 once difftree-action
+      # cuts a release.
+      - uses: smorinlabs/difftree-action@feat/phase0-composite
