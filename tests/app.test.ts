@@ -4,3 +4,7 @@ import { main } from "../src/app";
 export function testMain(): boolean {
   return main() === "2 + 3 = 5!";
 }
+
+export function alwaysTrue(): boolean {
+  return true;
+}
