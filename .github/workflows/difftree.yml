@@ -3,6 +3,11 @@ name: PR Diff Tree
 on:
   pull_request:
 
+# One run per PR so overlapping runs can't race to post the sticky comment.
+concurrency:
+  group: difftree-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pull-requests: write
@@ -15,6 +20,4 @@ jobs:
         with:
           fetch-depth: 0          # REQUIRED — difftree --pr needs full base history
 
-      # Pinned to the branch under test. Bump to @v0 / @v1 once difftree-action
-      # cuts a release.
-      - uses: smorinlabs/difftree-action@feat/phase0-composite
+      - uses: smorinlabs/difftree-action@v0
